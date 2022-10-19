@@ -9,5 +9,5 @@
 # define __XHARPLIB_END_DECLS  /* empty */
 #endif  /* !__cplusplus */
 
-#endif
+#endif  /* XHARPLIB_XHARP_H_INCLUDED */
 
