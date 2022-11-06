@@ -7,7 +7,7 @@
  * 
  */
 
-#include "../src/xexcept.h"
+#include "../../src/xexcept.h"
 #include <stdio.h>
 
 /* Directly raise an exception */
