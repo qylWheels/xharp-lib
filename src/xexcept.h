@@ -3,14 +3,14 @@
  * @author qylWheels (command1748165360@126.com)
  * @brief This interface provides a series of facilities that catch exceptions.
  *        You should ONLY use macros as follows:
- *        XTRY, XEXCEPT, XELSE, XFINALLY, XENDTRY, XRAISE.
+ *        XTRY, XEXCEPT, XELSE, XFINALLY, XENDTRY, XRAISE, XRETURN.
  * @version 1.0.0
  * @date 2022-10-19
  * 
  */
 
 #ifndef XHARPLIB_XEXCEPT_H_INCLUDED
-#define XHARPLIB_XEXCEPT_H_INCLUDED
+#define XHARPLIB_XEXCEPT_H_INCLUDED 1
 
 #include "xharp.h"
 #include <setjmp.h>
