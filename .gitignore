@@ -1,3 +1,7 @@
+# Executables
+xexcept_test
+xlist_test
+
 # Prerequisites
 *.d
 
