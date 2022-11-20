@@ -1,3 +1,3 @@
-xexcept_test: xexcept_test.c ../../src/xharp.h ../../src/xexcept.h ../../src/xexcept.c
-	gcc xexcept_test.c ../../src/xharp.h ../../src/xexcept.h ../../src/xexcept.c -o xexcept_test
+xexcept_test: xexcept_test.c ../../src/xharp.* ../../src/xexcept.*
+	gcc xexcept_test.c ../../src/xharp.* ../../src/xexcept.* -o xexcept_test
 

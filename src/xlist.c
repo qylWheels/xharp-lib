@@ -3,7 +3,7 @@
  * @author qylWheels (command1748165360@126.com)
  * @brief Implementation of interface "xlist".
  * @version 1.0.0
- * @date 2022-11-15
+ * @date 2022-11-17
  *
  */
 
@@ -12,8 +12,17 @@
 #include <string.h>
 #include <assert.h>
 
-xexcept_t mem_failed = "Memory alloc failed";
-xexcept_t buf_failed = "Buffer size too small";
+struct _xlist_node {
+	void			*_data;
+	size_t		 	 _data_size;
+	struct _xlist_node	*_prev;
+	struct _xlist_node	*_next;
+};
+
+struct _xlist {
+	struct _xlist_node	*_first;
+	int			 _length;
+};
 
 xlist_t *xlist_new(void)
 {

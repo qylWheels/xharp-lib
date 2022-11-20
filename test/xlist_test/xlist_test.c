@@ -1,4 +1,13 @@
-#include "../../src/xlist.h"
+#/**
+ * @file xlist_test.c
+ * @author qylWheels (command1748165360@126.com)
+ * @brief Testing routine of interface "xlist".
+ * @version 1.0.0
+ * @date 2022-11-20
+ * 
+ */
+
+include "../../src/xlist.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -38,8 +47,6 @@ void test_xlist_new(void)
 	printf("The test of xlist_new() is running...\n");
 	xlist_t *l = xlist_new();
 	assert(l);
-	assert(l->_first == NULL);
-	assert(l->_length == 0);
 	xlist_delete(l);
 }
 
@@ -57,8 +64,7 @@ void test_xlist_clear(void)
 	printf("The test of xlist_clear() is running...\n");
 	xlist_t *l = xlist_create();
 	xlist_clear(l);
-	assert(!l->_first);
-	assert(l->_length == 0);
+	printf("length of l: %d\n", xlist_length(l));
 	xlist_delete(l);
 }
 

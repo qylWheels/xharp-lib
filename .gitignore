@@ -1,6 +1,7 @@
 # Executables
 xexcept_test
 xlist_test
+xqueue_test
 
 # Prerequisites
 *.d

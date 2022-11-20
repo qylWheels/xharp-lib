@@ -3,7 +3,7 @@
  * @author qylWheels (command1748165360@126.com)
  * @brief This interface provides linked lists that can store any type of data.
  * @version 1.0.0
- * @date 2022-11-6
+ * @date 2022-11-17
  *
  */
 
@@ -14,17 +14,10 @@
 #include "xexcept.h"
 #include <stddef.h>
 
-struct _xlist_node {
-	void			*_data;
-	size_t		 	 _data_size;
-	struct _xlist_node	*_prev;
-	struct _xlist_node	*_next;
-};
+extern xexcept_t mem_failed;
+extern xexcept_t buf_failed;
 
-struct _xlist {
-	struct _xlist_node	*_first;
-	int			 _length;
-};
+struct _xlist;
 typedef struct _xlist xlist_t;
 
 typedef int (*xlist_apply_fn)(void *data, void *args);
