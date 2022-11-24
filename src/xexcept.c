@@ -3,7 +3,7 @@
  * @author qylWheels (command1748165360@126.com)
  * @brief Implementation of interface "xexcept".
  * @version 1.0.0
- * @date 2022-10-19
+ * @date 2022-11-24
  * 
  */
 
@@ -14,7 +14,7 @@
 
 struct _xexcept_frame *_xexcept_stack = NULL;
 
-void xexcept_raise(xexcept_t e, const char *file, int line)
+void xexcept_raise(xexcept e, const char *file, int line)
 {
 	struct _xexcept_frame *ef = _xexcept_stack;
 	if (!ef) {

@@ -3,7 +3,7 @@
  * @author qylWheels (command1748165360@126.com)
  * @brief Implementation of interface "xqueue".
  * @version 1.0.0
- * @date 2022-11-17
+ * @date 2022-11-24
  *
  */
 
@@ -11,82 +11,76 @@
 #include <stdlib.h>
 #include <assert.h>
 
-struct _xqueue {
-	xlist_t 	*_l;
-	int	 	 _length;
+struct xqueue {
+	xlist		*l;
+	int	 	 length;
 };
 
-xqueue_t *xqueue_new(void)
+xqueue *xqueue_new(void)
 {
-	xqueue_t *newqueue;
-	newqueue = (xqueue_t *)malloc(sizeof *newqueue);
+	xqueue *newqueue;
+	newqueue = (xqueue *)malloc(sizeof *newqueue);
 	if (!newqueue)
 		XRAISE(mem_failed);
-	newqueue->_l = xlist_new();
-	newqueue->_length = 0;
+	newqueue->l = xlist_new();
+	newqueue->length = 0;
 	return newqueue;
 }
 
-void xqueue_delete(xqueue_t *q)
+void xqueue_delete(xqueue *q)
 {
 	assert(q);
-	xlist_delete(q->_l);
+	xlist_delete(q->l);
 	free(q);
 }
 
-xqueue_t *xqueue_clear(xqueue_t *q)
+xqueue *xqueue_clear(xqueue *q)
 {
 	assert(q);
-	xlist_clear(q->_l);
-	q->_length = 0;
+	xlist_clear(q->l);
+	q->length = 0;
 	return q;
 }
 
-xqueue_t *xqueue_in(xqueue_t *q, void *data, size_t data_size)
+xqueue *xqueue_in(xqueue *q, void *data, size_t data_size)
 {
 	assert(q);
 	assert(data);
 	assert(data_size != 0);
-	xlist_insert_tail(q->_l, data, data_size);
-	++q->_length;
+	xlist_insert_tail(q->l, data, data_size);
+	++q->length;
 	return q;
 }
 
-xqueue_t *xqueue_out(xqueue_t *q)
+xqueue *xqueue_out(xqueue *q)
 {
 	assert(q);
-	xlist_remove_head(q->_l);
-	--q->_length;
+	xlist_remove_head(q->l);
+	--q->length;
 	return q;
 }
 
-xqueue_t *xqueue_get_front(xqueue_t *q, void *buf, size_t buf_size)
+void *xqueue_get_front(xqueue *q)
 {
 	assert(q);
-	assert(buf);
-	assert(buf_size != 0);
-	xlist_get_head(q->_l, buf, buf_size);
-	return q;
+	return xlist_get_head(q->l);
 }
 
-xqueue_t *xqueue_get_rear(xqueue_t *q, void *buf, size_t buf_size)
+void *xqueue_get_rear(xqueue *q)
 {
 	assert(q);
-	assert(buf);
-	assert(buf_size != 0);
-	xlist_get_tail(q->_l, buf, buf_size);
-	return q;
+	return xlist_get_tail(q->l);
 }
 
-int xqueue_length(xqueue_t *q)
+int xqueue_length(xqueue *q)
 {
 	assert(q);
-	return q->_length;
+	return q->length;
 }
 
-int xqueue_empty(xqueue_t *q)
+int xqueue_empty(xqueue *q)
 {
 	assert(q);
-	return q->_length == 0;
+	return q->length == 0;
 }
 

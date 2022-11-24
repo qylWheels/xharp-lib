@@ -1,13 +1,13 @@
-#/**
+/**
  * @file xlist_test.c
  * @author qylWheels (command1748165360@126.com)
  * @brief Testing routine of interface "xlist".
  * @version 1.0.0
- * @date 2022-11-20
+ * @date 2022-11-24
  * 
  */
 
-include "../../src/xlist.h"
+#include "../../src/xlist.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -19,23 +19,21 @@ int cmp(const void *a, const void *b)
 	return aa != bb;
 }
 
-int apply(void *data, void *args)
+void apply(void *data, void *args)
 {
 	printf("%d ", *(int *)data);
-	return 0;
 }
 
-int apply_add(void *data, void *args)
+void apply_add(void *data, void *args)
 {
 	int add = *(int *)args;
 	(*(int *)data) += add;
-	return 0;
 }
 
 /* Create a list for subsequent tests. */
-xlist_t *xlist_create(void)
+xlist *xlist_create(void)
 {
-	xlist_t *l = xlist_new();
+	xlist *l = xlist_new();
 	for (int i = 0; i < 10; i++)
 		xlist_insert_tail(l, &i, sizeof(int));
 	return l;
@@ -45,7 +43,7 @@ xlist_t *xlist_create(void)
 void test_xlist_new(void)
 {
 	printf("The test of xlist_new() is running...\n");
-	xlist_t *l = xlist_new();
+	xlist *l = xlist_new();
 	assert(l);
 	xlist_delete(l);
 }
@@ -54,7 +52,7 @@ void test_xlist_new(void)
 void test_xlist_delete(void)
 {
 	printf("The test of xlist_delete() is running...\n");
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	xlist_delete(l);
 }
 
@@ -62,7 +60,7 @@ void test_xlist_delete(void)
 void test_xlist_clear(void)
 {
 	printf("The test of xlist_clear() is running...\n");
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	xlist_clear(l);
 	printf("length of l: %d\n", xlist_length(l));
 	xlist_delete(l);
@@ -73,12 +71,12 @@ void test_xlist_copy(void)
 {
 	printf("The test of xlist_copy() is running...\n");
 
-	xlist_t *l1 = xlist_create();
+	xlist *l1 = xlist_create();
 	printf("l1: ");
 	xlist_foreach(l1, apply, NULL);
 	printf("\n");
 
-	xlist_t *l2 = xlist_new();
+	xlist *l2 = xlist_new();
 	printf("l2: ");
 	xlist_foreach(l2, apply, NULL);
 	printf("\n");
@@ -92,19 +90,22 @@ void test_xlist_copy(void)
 	printf("l2: ");
 	xlist_foreach(l2, apply, NULL);
 	printf("\n");
+
+	xlist_delete(l1);
+	xlist_delete(l2);
 }
 
 /* Test xlist_append() */
 void test_xlist_append(void)
 {
 	printf("The test of xlist_append() is running...\n");
-	xlist_t *l1 = xlist_create();
+	xlist *l1 = xlist_create();
 	xlist_remove_head(l1);
 	printf("l1: ");
 	xlist_foreach(l1, apply, NULL);
 	printf("\n");
 
-	xlist_t *l2 = xlist_create();
+	xlist *l2 = xlist_create();
 	printf("l2: ");
 	xlist_foreach(l2, apply, NULL);
 	printf("\n");
@@ -118,13 +119,16 @@ void test_xlist_append(void)
 	printf("l2: ");
 	xlist_foreach(l2, apply, NULL);
 	printf("\n");
+
+	xlist_delete(l1);
+	xlist_delete(l2);
 }
 
 /* Test xlist_reverse() */
 void test_xlist_reverse(void)
 {
 	printf("The test of xlist_reverse() is running...\n");
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	printf("l: ");
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
@@ -132,13 +136,14 @@ void test_xlist_reverse(void)
 	printf("l: ");
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
+	xlist_delete(l);
 }
 
 /* Test xlist_foreach() */
 void test_xlist_foreach(void)
 {
 	printf("The test of xlist_foreach() is running...\n");
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	printf("l: ");
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
@@ -147,13 +152,14 @@ void test_xlist_foreach(void)
 	printf("l: ");
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
+	xlist_delete(l);
 }
 
 /* Test xlist_insert_head() */
 void test_xlist_insert_head(void)
 {
 	printf("The test of xlist_insert_head() is running...\n");
-	xlist_t *l = xlist_new();
+	xlist *l = xlist_new();
 	for (int i = 0; i < 5; i++)
 		xlist_insert_head(l, &i, sizeof(int));
 	xlist_foreach(l, apply, NULL);
@@ -165,7 +171,7 @@ void test_xlist_insert_head(void)
 void test_xlist_insert_tail(void)
 {
 	printf("The test of xlist_insert_tail() is running...\n");
-	xlist_t *l = xlist_new();
+	xlist *l = xlist_new();
 	for (int i = 0; i < 5; i++)
 		xlist_insert_tail(l, &i, sizeof(int));
 	xlist_foreach(l, apply, NULL);
@@ -177,7 +183,7 @@ void test_xlist_insert_tail(void)
 void test_xlist_insert_pos(void)
 {
 	printf("The test of xlist_insert_pos() is running...\n");
-	xlist_t *l = xlist_new();
+	xlist *l = xlist_new();
 	int i;
 	i = 0;
 	xlist_insert_pos(l, 1, &i, sizeof(int));
@@ -202,12 +208,11 @@ void test_xlist_insert_pos(void)
 void test_xlist_get_head(void)
 {
 	printf("The test of xlist_get_head() is running...\n");
-	int buf;
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
-	xlist_get_head(l, &buf, sizeof(buf));
-	printf("buf = %d\n", buf);
+	int a = *(int *)xlist_get_head(l);
+	printf("buf = %d\n", a);
 	xlist_delete(l);
 }
 
@@ -215,12 +220,11 @@ void test_xlist_get_head(void)
 void test_xlist_get_tail(void)
 {
 	printf("The test of xlist_get_tail() is running...\n");
-	int buf;
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
-	xlist_get_tail(l, &buf, sizeof(buf));
-	printf("buf = %d\n", buf);
+	int a = *(int *)xlist_get_tail(l);
+	printf("buf = %d\n", a);
 	xlist_delete(l);
 }
 
@@ -228,16 +232,13 @@ void test_xlist_get_tail(void)
 void test_xlist_get_pos(void)
 {
 	printf("The test of xlist_get_pos() is running...\n");
-	int buf;
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
-	xlist_get_pos(l, 3, &buf, sizeof(buf));  /* the first half */
-	printf("buf = %d\n", buf);
-	xlist_get_pos(l, 7, &buf, sizeof(buf));  /* the second half */
-	printf("buf = %d\n", buf);
-	// char buf2;
-	// xlist_get_pos(l, 7, &buf2, sizeof(buf2));  /* raise "buf_failed" */
+	int a = *(int *)xlist_get_pos(l, 3);  /* the first half */
+	printf("buf = %d\n", a);
+	a = *(int *)xlist_get_pos(l, 7);  /* the first half */
+	printf("buf = %d\n", a);
 	xlist_delete(l);
 }
 
@@ -245,7 +246,7 @@ void test_xlist_get_pos(void)
 void test_xlist_remove_head(void)
 {
 	printf("The test of xlist_remove_head() is running...\n");
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
 	xlist_remove_head(l);
@@ -258,7 +259,7 @@ void test_xlist_remove_head(void)
 void test_xlist_remove_tail(void)
 {
 	printf("The test of xlist_remove_tail() is running...\n");
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
 	xlist_remove_tail(l);
@@ -271,7 +272,7 @@ void test_xlist_remove_tail(void)
 void test_xlist_remove_pos(void)
 {
 	printf("The test of xlist_remove_pos() is running...\n");
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	xlist_foreach(l, apply, NULL);
 	printf("\n");
 	xlist_remove_pos(l, 3);
@@ -286,17 +287,29 @@ void test_xlist_remove_pos(void)
 /* Test xlist_find() */
 void test_xlist_find(void)
 {
-	xlist_t *l = xlist_create();
+	xlist *l = xlist_create();
 	printf("The test of xlist_find() is running...\n");
 	(void)xlist_foreach(l, apply, NULL);
 	printf("\n");
 	int i;
+	int *a;
 	i = 2;
-	printf("elem 2 is in: %d\n", xlist_find(l, &i, cmp));
+	if ((a = xlist_find(l, &i, cmp)))
+		printf("elem 2 is in: %d\n", *a);
+	else
+		printf("%d is not found\n", i);
+
 	i = 9;
-	printf("elem 9 is in: %d\n", xlist_find(l, &i, cmp));
+	if ((a = xlist_find(l, &i, cmp)))
+		printf("elem 9 is in: %d\n", *a);
+	else
+		printf("%d is not found\n", i);
+
 	i = 114514;
-	printf("elem 114514 is in: %d\n", xlist_find(l, &i, cmp));
+	if ((a = xlist_find(l, &i, cmp)))
+		printf("elem 114514 is in: %d\n", *a);
+	else
+		printf("%d is not found\n", i);
 	xlist_delete(l);
 }
 

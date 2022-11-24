@@ -5,7 +5,7 @@
  *        You should ONLY use macros as follows:
  *        XTRY, XEXCEPT, XELSE, XFINALLY, XENDTRY, XRAISE, XRETURN.
  * @version 1.0.0
- * @date 2022-10-19
+ * @date 2022-11-24
  * 
  */
 
@@ -16,10 +16,10 @@
 #include <setjmp.h>
 #include <string.h>
 
-typedef const char *xexcept_t;
+typedef const char *xexcept;
 
 struct _xexcept_frame {
-	xexcept_t		 _e;
+	xexcept			 _e;
 	jmp_buf  		 _env;
 	const char		*_file;
 	int			 _line;
@@ -37,7 +37,7 @@ __XHARPLIB_BEGIN_DECLS
 
 extern struct _xexcept_frame *_xexcept_stack;
 
-extern void xexcept_raise(xexcept_t e, const char *file, int line);
+extern void xexcept_raise(xexcept e, const char *file, int line);
 
 __XHARPLIB_END_DECLS
 
