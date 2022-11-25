@@ -3,7 +3,7 @@
  * @author qylWheels (command1748165360@126.com)
  * @brief Implementation of interface "xqueue".
  * @version 1.0.0
- * @date 2022-11-24
+ * @date 2022-11-25
  *
  */
 
@@ -55,6 +55,7 @@ xqueue *xqueue_in(xqueue *q, void *data, size_t data_size)
 xqueue *xqueue_out(xqueue *q)
 {
 	assert(q);
+	assert(q->length > 0);
 	xlist_remove_head(q->l);
 	--q->length;
 	return q;
@@ -63,12 +64,14 @@ xqueue *xqueue_out(xqueue *q)
 void *xqueue_get_front(xqueue *q)
 {
 	assert(q);
+	assert(q->length > 0);
 	return xlist_get_head(q->l);
 }
 
 void *xqueue_get_rear(xqueue *q)
 {
 	assert(q);
+	assert(q->length > 0);
 	return xlist_get_tail(q->l);
 }
 

@@ -169,18 +169,21 @@ xlist *xlist_insert_pos(xlist *l, int pos, void *data, size_t data_size)
 void *xlist_get_head(xlist *l)
 {
 	assert(l);
+	assert(l->length > 0);
 	return xlist_get_pos(l, 1);
 }
 
 void *xlist_get_tail(xlist *l)
 {
 	assert(l);
+	assert(l->length > 0);
 	return xlist_get_pos(l, l->length);
 }
 
 void *xlist_get_pos(xlist *l, int pos)
 {
 	assert(l);
+	assert(l->length > 0);
 	assert(pos >= 1 && pos <= l->length);
 	struct xlist_node *n;
 	int cur_pos;
@@ -197,18 +200,21 @@ void *xlist_get_pos(xlist *l, int pos)
 xlist *xlist_remove_head(xlist *l)
 {
 	assert(l);
+	assert(l->length > 0);
 	return xlist_remove_pos(l, 1);
 }
 
 xlist *xlist_remove_tail(xlist *l)
 {
 	assert(l);
+	assert(l->length > 0);
 	return xlist_remove_pos(l, l->length);
 }
 
 xlist *xlist_remove_pos(xlist *l, int pos)
 {
 	assert(l);
+	assert(l->length > 0);
 	assert(pos >= 1 && pos <= l->length);
 	struct xlist_node *n;
 	int cur_pos;
