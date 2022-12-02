@@ -1,10 +1,3 @@
-# Executables
-xexcept_test
-xlist_test
-xqueue_test
-xstack_test
-xarray_test
-
 # Prerequisites
 *.d
 
