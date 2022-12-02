@@ -27,7 +27,7 @@ extern void xlist_delete(xlist *l);
 
 extern xlist *xlist_clear(xlist *l);
 
-extern xlist *xlist_copy(xlist *dest, xlist *src);
+extern xlist *xlist_clone(xlist *dest, xlist *src);
 
 extern xlist *xlist_append(xlist *l, xlist *tail);
 
@@ -37,6 +37,7 @@ extern xlist *xlist_foreach(xlist *l,
 		void (*apply_fn)(void *node_data, void *args),
 		void *args);
 
+/* FIXME: modify "void *" to "const void *" */
 extern xlist *xlist_insert_head(xlist *l, void *data, size_t data_size);
 
 extern xlist *xlist_insert_tail(xlist *l, void *data, size_t data_size);
@@ -58,8 +59,10 @@ extern xlist *xlist_remove_pos(xlist *l, int pos);
 extern void *xlist_find(xlist *l, void *data,
 		int (*compare_fn)(const void *node_data, const void *user_data));
 
+/* FIXME: Use "size_t" as return value */
 extern int xlist_length(xlist *l);
 
+/* FIXME: Use "bool" as return value */
 extern int xlist_empty(xlist *l);
 
 __XHARPLIB_END_DECLS

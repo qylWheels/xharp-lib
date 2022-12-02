@@ -13,6 +13,7 @@
 
 struct xstack {
 	xlist		*l;
+	/* FIXME: Use "size_t" instead */
 	int		 size;
 };
 

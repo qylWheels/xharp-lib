@@ -28,14 +28,17 @@ extern void xstack_delete(xstack *stk);
 
 extern xstack *xstack_clear(xstack *stk);
 
+/* FIXME: modify "void *" to "const void *" */
 extern xstack *xstack_push(xstack *stk, void *data, size_t data_size);
 
 extern xstack *xstack_pop(xstack *stk);
 
 extern void *xstack_get_top(xstack *stk);
 
+/* FIXME: Use "size_t" as return value */
 extern int xstack_size(xstack *stk);
 
+/* FIXME: Use "bool" as return value */
 extern int xstack_empty(xstack *stk);
 
 __XHARPLIB_END_DECLS

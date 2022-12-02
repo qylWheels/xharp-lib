@@ -21,6 +21,7 @@ struct xlist_node {
 
 struct xlist {
 	struct xlist_node	*first;
+	/* FIXME: Use "size_t" instead */
 	int			 length;
 };
 
@@ -56,7 +57,7 @@ xlist *xlist_clear(xlist *l)
 	return l;
 }
 
-xlist *xlist_copy(xlist *dest, xlist *src)
+xlist *xlist_clone(xlist *dest, xlist *src)
 {
 	assert(dest);
 	assert(src);

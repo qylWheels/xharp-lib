@@ -13,6 +13,7 @@
 
 struct xqueue {
 	xlist		*l;
+	/* FIXME: Use "size_t" instead */
 	int	 	 length;
 };
 

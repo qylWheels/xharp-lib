@@ -66,10 +66,10 @@ void test_xlist_clear(void)
 	xlist_delete(l);
 }
 
-/* Test xlist_copy() */
-void test_xlist_copy(void)
+/* Test xlist_clone() */
+void test_xlist_clone(void)
 {
-	printf("The test of xlist_copy() is running...\n");
+	printf("The test of xlist_clone() is running...\n");
 
 	xlist *l1 = xlist_create();
 	printf("l1: ");
@@ -81,7 +81,7 @@ void test_xlist_copy(void)
 	xlist_foreach(l2, apply, NULL);
 	printf("\n");
 
-	xlist_copy(l2, l1);
+	xlist_clone(l2, l1);
 
 	printf("l1: ");
 	xlist_foreach(l1, apply, NULL);
@@ -318,7 +318,7 @@ int main(int argc, char *argv[])
 	test_xlist_new();
 	test_xlist_delete();
 	test_xlist_clear();
-	test_xlist_copy();
+	test_xlist_clone();
 	test_xlist_append();
 	test_xlist_reverse();
 	test_xlist_foreach();
