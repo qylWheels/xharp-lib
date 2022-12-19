@@ -7,7 +7,6 @@
  * 
  */
 
-#include "xharp.h"
 #include "xexcept.h"
 
 xexcept mem_failed = "Memory allocation failed";

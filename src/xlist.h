@@ -13,6 +13,7 @@
 #include "xharp.h"
 #include "xexcept.h"
 #include <stddef.h>
+#include <stdbool.h>
 
 extern xexcept mem_failed;
 
@@ -27,7 +28,9 @@ extern void xlist_delete(xlist *l);
 
 extern xlist *xlist_clear(xlist *l);
 
-extern xlist *xlist_clone(xlist *dest, xlist *src);
+extern xlist *xlist_clone(xlist *l);
+
+extern xlist *xlist_clone_to(xlist *dest, xlist *src);
 
 extern xlist *xlist_append(xlist *l, xlist *tail);
 
@@ -37,33 +40,31 @@ extern xlist *xlist_foreach(xlist *l,
 		void (*apply_fn)(void *node_data, void *args),
 		void *args);
 
-/* FIXME: modify "void *" to "const void *" */
-extern xlist *xlist_insert_head(xlist *l, void *data, size_t data_size);
+extern xlist *xlist_insert_head(xlist *l, const void *data, size_t data_size);
 
-extern xlist *xlist_insert_tail(xlist *l, void *data, size_t data_size);
+extern xlist *xlist_insert_tail(xlist *l, const void *data, size_t data_size);
 
-extern xlist *xlist_insert_pos(xlist *l, int pos, void *data, size_t data_size);
+extern xlist *xlist_insert_pos(xlist *l, size_t pos,
+		const void *data, size_t data_size);
 
 extern void *xlist_get_head(xlist *l);
 
 extern void *xlist_get_tail(xlist *l);
 
-extern void *xlist_get_pos(xlist *l, int pos);
+extern void *xlist_get_pos(xlist *l, size_t pos);
 
 extern xlist *xlist_remove_head(xlist *l);
 
 extern xlist *xlist_remove_tail(xlist *l);
 
-extern xlist *xlist_remove_pos(xlist *l, int pos);
+extern xlist *xlist_remove_pos(xlist *l, size_t pos);
 
-extern void *xlist_find(xlist *l, void *data,
+extern void *xlist_find(xlist *l, const void *data,
 		int (*compare_fn)(const void *node_data, const void *user_data));
 
-/* FIXME: Use "size_t" as return value */
-extern int xlist_length(xlist *l);
+extern size_t xlist_length(xlist *l);
 
-/* FIXME: Use "bool" as return value */
-extern int xlist_empty(xlist *l);
+extern bool xlist_empty(xlist *l);
 
 __XHARPLIB_END_DECLS
 
