@@ -13,6 +13,7 @@
 #include "xharp.h"
 #include "xexcept.h"
 #include <stddef.h>
+#include <stdbool.h>
 
 extern xexcept mem_failed;
 
@@ -21,20 +22,22 @@ typedef struct xarray xarray;
 
 __XHARPLIB_BEGIN_DECLS
 
-extern xarray *xarray_new(int block_count, size_t block_size);
+extern xarray *xarray_new(size_t block_count, size_t block_size);
 
 extern void xarray_delete(xarray *arr);
 
-extern xarray *xarray_clone(xarray *dest, xarray *src);
+extern xarray *xarray_clone(xarray *arr);
 
-extern xarray *xarray_resize(xarray *arr, int new_block_count);
+extern xarray *xarray_clone_to(xarray *dest, xarray *src);
 
-extern xarray *xarray_put(xarray *arr, int index,
+extern xarray *xarray_resize(xarray *arr, size_t new_block_count);
+
+extern xarray *xarray_put(xarray *arr, size_t index,
 		const void *data, size_t data_size);
 
-extern void *xarray_get(xarray *arr, int index);
+extern void *xarray_get(xarray *arr, size_t index);
 
-extern int xarray_block_count(xarray *arr);
+extern size_t xarray_block_count(xarray *arr);
 
 extern size_t xarray_block_size(xarray *arr);
 

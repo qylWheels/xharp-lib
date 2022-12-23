@@ -8,13 +8,14 @@
  */
 
 #include "xstack.h"
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <assert.h>
 
 struct xstack {
 	xlist		*l;
-	/* FIXME: Use "size_t" instead */
-	int		 size;
+	size_t		 size;
 };
 
 xstack *xstack_new(void)
@@ -43,7 +44,25 @@ xstack *xstack_clear(xstack *stk)
 	return stk;
 }
 
-xstack *xstack_push(xstack *stk, void *data, size_t data_size)
+xstack *xstack_clone(xstack *stk)
+{
+	assert(stk);
+	xstack *newstack = xstack_new();
+	xlist_clone_to(newstack->l, stk->l);
+	newstack->size = stk->size;
+	return newstack;
+}
+
+xstack *xstack_clone_to(xstack *dest, xstack *src)
+{
+	assert(dest);
+	assert(src);
+	xlist_clone_to(dest->l, src->l);
+	dest->size = src->size;
+	return dest;
+}
+
+xstack *xstack_push(xstack *stk, const void *data, size_t data_size)
 {
 	assert(stk);
 	assert(data);
@@ -56,7 +75,7 @@ xstack *xstack_push(xstack *stk, void *data, size_t data_size)
 xstack *xstack_pop(xstack *stk)
 {
 	assert(stk);
-	assert(stk->size > 0);
+	assert(stk->size != 0);
 	xlist_remove_head(stk->l);
 	--stk->size;
 	return stk;
@@ -69,13 +88,13 @@ void *xstack_get_top(xstack *stk)
 	return xlist_get_head(stk->l);
 }
 
-int xstack_size(xstack *stk)
+size_t xstack_size(xstack *stk)
 {
 	assert(stk);
 	return stk->size;
 }
 
-int xstack_empty(xstack *stk)
+bool xstack_empty(xstack *stk)
 {
 	assert(stk);
 	return stk->size == 0;

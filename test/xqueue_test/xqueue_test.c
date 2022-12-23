@@ -33,9 +33,59 @@ void test_xqueue_clear(void)
 	printf("Test of xqueue_clear() is running...\n");
 	xqueue *q = xqueue_create();
 	xqueue_clear(q);
-	printf("len = %d\n", xqueue_length(q));
+	printf("len = %ld\n", xqueue_length(q));
 	xqueue_delete(q);
 }
+
+/* Test of xqueue_clone() */
+void test_xqueue_clone(void)
+{
+	printf("Test of xqueue_clone() is running...\n");
+	xqueue *q1 = xqueue_create();
+	xqueue *q2 = xqueue_clone(q1);
+	
+	printf("q1: ");
+	while (!xqueue_empty(q1)) {
+		printf("%d ", *(int *)xqueue_get_front(q1));
+		xqueue_out(q1);
+	}
+
+	printf("q2: ");
+	while (!xqueue_empty(q2)) {
+		printf("%d ", *(int *)xqueue_get_front(q2));
+		xqueue_out(q2);
+	}
+
+	printf("\n");
+	xqueue_delete(q1);
+	xqueue_delete(q2);
+}
+
+/* Test of xqueue_clone_to() */
+void test_xqueue_clone_to(void)
+{
+	printf("Test of xqueue_clone_to() is running...\n");
+	xqueue *q1 = xqueue_create();
+	xqueue *q2 = xqueue_new();
+	xqueue_clone_to(q2, q1);
+	
+	printf("q1: ");
+	while (!xqueue_empty(q1)) {
+		printf("%d ", *(int *)xqueue_get_front(q1));
+		xqueue_out(q1);
+	}
+
+	printf("q2: ");
+	while (!xqueue_empty(q2)) {
+		printf("%d ", *(int *)xqueue_get_front(q2));
+		xqueue_out(q2);
+	}
+
+	printf("\n");
+	xqueue_delete(q1);
+	xqueue_delete(q2);
+}
+
 
 /* Test of xqueue_in() and xqueue_out() */
 void test_xqueue_in_and_out(void)
@@ -60,6 +110,8 @@ int main(int argc, char *argv[])
 {
 	test_xqueue_new_and_delete();
 	test_xqueue_clear();
+	test_xqueue_clone();
+	test_xqueue_clone_to();
 	test_xqueue_in_and_out();
 	return 0;
 }

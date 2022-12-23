@@ -8,13 +8,15 @@
  */
 
 #include "xqueue.h"
+#include "xlist.h"
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <assert.h>
 
 struct xqueue {
 	xlist		*l;
-	/* FIXME: Use "size_t" instead */
-	int	 	 length;
+	size_t	 	 length;
 };
 
 xqueue *xqueue_new(void)
@@ -43,7 +45,22 @@ xqueue *xqueue_clear(xqueue *q)
 	return q;
 }
 
-xqueue *xqueue_in(xqueue *q, void *data, size_t data_size)
+xqueue *xqueue_clone(xqueue *q)
+{
+	xqueue *newqueue = xqueue_new();
+	xlist_clone_to(newqueue->l, q->l);
+	newqueue->length = q->length;
+	return newqueue;
+}
+
+xqueue *xqueue_clone_to(xqueue *dest, xqueue *src)
+{
+	xlist_clone_to(dest->l, src->l);
+	dest->length = src->length;
+	return dest;
+}
+
+xqueue *xqueue_in(xqueue *q, const void *data, size_t data_size)
 {
 	assert(q);
 	assert(data);
@@ -56,7 +73,7 @@ xqueue *xqueue_in(xqueue *q, void *data, size_t data_size)
 xqueue *xqueue_out(xqueue *q)
 {
 	assert(q);
-	assert(q->length > 0);
+	assert(q->length != 0);
 	xlist_remove_head(q->l);
 	--q->length;
 	return q;
@@ -65,24 +82,24 @@ xqueue *xqueue_out(xqueue *q)
 void *xqueue_get_front(xqueue *q)
 {
 	assert(q);
-	assert(q->length > 0);
+	assert(q->length != 0);
 	return xlist_get_head(q->l);
 }
 
 void *xqueue_get_rear(xqueue *q)
 {
 	assert(q);
-	assert(q->length > 0);
+	assert(q->length != 0);
 	return xlist_get_tail(q->l);
 }
 
-int xqueue_length(xqueue *q)
+size_t xqueue_length(xqueue *q)
 {
 	assert(q);
 	return q->length;
 }
 
-int xqueue_empty(xqueue *q)
+bool xqueue_empty(xqueue *q)
 {
 	assert(q);
 	return q->length == 0;

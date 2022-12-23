@@ -7,6 +7,7 @@
  *
  */
 
+#include <stdbool.h>
 #ifndef XHARPLIB_XSTACK_H_INCLUDED
 #define XHARPLIB_XSTACK_H_INCLUDED 1
 
@@ -14,6 +15,7 @@
 #include "xexcept.h"
 #include "xlist.h"
 #include <stddef.h>
+#include <stdbool.h>
 
 extern xexcept mem_failed;
 
@@ -28,18 +30,19 @@ extern void xstack_delete(xstack *stk);
 
 extern xstack *xstack_clear(xstack *stk);
 
-/* FIXME: modify "void *" to "const void *" */
-extern xstack *xstack_push(xstack *stk, void *data, size_t data_size);
+extern xstack *xstack_clone(xstack *stk);
+
+extern xstack *xstack_clone_to(xstack *dest, xstack *src);
+
+extern xstack *xstack_push(xstack *stk, const void *data, size_t data_size);
 
 extern xstack *xstack_pop(xstack *stk);
 
 extern void *xstack_get_top(xstack *stk);
 
-/* FIXME: Use "size_t" as return value */
-extern int xstack_size(xstack *stk);
+extern size_t xstack_size(xstack *stk);
 
-/* FIXME: Use "bool" as return value */
-extern int xstack_empty(xstack *stk);
+extern bool xstack_empty(xstack *stk);
 
 __XHARPLIB_END_DECLS
 

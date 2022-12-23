@@ -34,11 +34,56 @@ void test_xstack_clear(void)
 {
 	printf("Test of xstack_clear() is running...\n");
 	xstack *stk = xstack_create();
-	printf("size = %d\n", xstack_size(stk));
+	printf("size = %ld\n", xstack_size(stk));
 	xstack_clear(stk);
-	printf("size = %d\n", xstack_size(stk));
+	printf("size = %ld\n", xstack_size(stk));
 	xstack_delete(stk);
 	printf("\n");
+}
+
+/* Test of xstack_clone() */
+void test_xstack_clone(void)
+{
+	printf("Test of xstack_clone() is running...\n");
+	xstack *stk1 = xstack_create();
+	xstack *stk2 = xstack_clone(stk1);
+	printf("stk1: ");
+	while (!xstack_empty(stk1)) {
+		printf("%d ", *(int *)xstack_get_top(stk1));
+		xstack_pop(stk1);
+	}
+	printf("\n");
+	printf("stk2: ");
+	while (!xstack_empty(stk2)) {
+		printf("%d ", *(int *)xstack_get_top(stk2));
+		xstack_pop(stk2);
+	}
+	xstack_delete(stk1);
+	xstack_delete(stk2);
+	printf("\n\n");
+}
+
+/* Test of xstack_clone_to() */
+void test_xstack_clone_to(void)
+{
+	printf("Test of xstack_clone_to() is running...\n");
+	xstack *stk1 = xstack_create();
+	xstack *stk2 = xstack_create();
+	xstack_clone_to(stk1, stk2);
+	printf("stk1: ");
+	while (!xstack_empty(stk1)) {
+		printf("%d ", *(int *)xstack_get_top(stk1));
+		xstack_pop(stk1);
+	}
+	printf("\n");
+	printf("stk2: ");
+	while (!xstack_empty(stk2)) {
+		printf("%d ", *(int *)xstack_get_top(stk2));
+		xstack_pop(stk2);
+	}
+	xstack_delete(stk1);
+	xstack_delete(stk2);
+	printf("\n\n");
 }
 
 /* Test of xstack_push(), xstack_pop() and xstack_get_top() */
@@ -46,7 +91,7 @@ void test_xstack_clear(void)
 void test_xstack_push_pop_gettop(void)
 {
 	printf("Test of xstack_push(), xstack_pop() and xstack_get_top()"
-		"is running\n");
+		" is running\n");
 	xstack *stk = xstack_create();
 	/* xstack_push() has been tested in xstack_create() */
 	int a;
@@ -66,6 +111,8 @@ int main(int argc, char *argv[])
 {
 	test_xstack_new_and_delete();
 	test_xstack_clear();
+	test_xstack_clone();
+	test_xstack_clone_to();
 	test_xstack_push_pop_gettop();
 	return 0;
 }

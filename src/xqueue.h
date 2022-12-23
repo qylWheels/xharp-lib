@@ -7,6 +7,7 @@
  *
  */
 
+#include <stdbool.h>
 #ifndef XHARPLIB_XQUEUE_H_INCLUDED
 #define XHARPLIB_XQUEUE_H_INCLUDED 1
 
@@ -28,8 +29,11 @@ extern void xqueue_delete(xqueue *q);
 
 extern xqueue *xqueue_clear(xqueue *q);
 
-/* FIXME: modify "void *" to "const void *" */
-extern xqueue *xqueue_in(xqueue *q, void *data, size_t data_size);
+extern xqueue *xqueue_clone(xqueue *q);
+
+extern xqueue *xqueue_clone_to(xqueue *dest, xqueue *src);
+
+extern xqueue *xqueue_in(xqueue *q, const void *data, size_t data_size);
 
 extern xqueue *xqueue_out(xqueue *q);
 
@@ -37,11 +41,9 @@ extern void *xqueue_get_front(xqueue *q);
 
 extern void *xqueue_get_rear(xqueue *q);
 
-/* FIXME: Use "size_t" as return value */
-extern int xqueue_length(xqueue *q);
+extern size_t xqueue_length(xqueue *q);
 
-/* FIXME: Use "bool" as return value */
-extern int xqueue_empty(xqueue *q);
+extern bool xqueue_empty(xqueue *q);
 
 __XHARPLIB_END_DECLS
 
